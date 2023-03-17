@@ -91,25 +91,21 @@ const AlbumToArtist = () => {
           </div>
           {!albumOpen
             ? ""
-            : albumData.albums.map((album) =>
-                !album.artist ? (
-                  <div
-                    onClick={() => {
-                      setAlbum({
-                        ...album,
-                        album_name: album.album_name,
-                        id: album._id,
-                      });
-                      setAlbumOpen(false);
-                    }}
-                    key={album.album_name}
-                  >
-                    <p>{album.album_name}</p>
-                  </div>
-                ) : (
-                  ""
-                )
-              )}
+            : albumData.albums.map((album) => (
+                <div
+                  onClick={() => {
+                    setAlbum({
+                      ...album,
+                      album_name: album.album_name,
+                      id: album._id,
+                    });
+                    setAlbumOpen(false);
+                  }}
+                  key={album.album_name}
+                >
+                  <p>{album.album_name}</p>
+                </div>
+              ))}
         </div>
         <button className="btn" type="submit">
           Submit
