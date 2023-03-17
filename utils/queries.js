@@ -7,6 +7,12 @@ export const ALL_ARTISTS = gql`
       name
       age
       image
+      albums {
+        _id
+        album_name
+        year
+        artwork
+      }
     }
   }
 `;

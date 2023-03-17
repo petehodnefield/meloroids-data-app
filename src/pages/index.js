@@ -1,7 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
 
 import Link from "next/link";
 const inter = Inter({ subsets: ["latin"] });
@@ -15,9 +14,27 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <Link href="/album-to-artist">Add albums to artists</Link>
-        <Link href="/songs-to-albums">Add songs to albums</Link>
+      <main className="container">
+        <div className="row">
+          <div className="container">
+            <h2 className="header">Queries:</h2>
+            <Link href="/artists" className="link">
+              All Artists
+            </Link>
+          </div>
+          <div className="container">
+            {" "}
+            <h2 className="header">Mutations:</h2>
+            <div className="options-wrapper">
+              <Link href="/album-to-artist" className="link">
+                Add albums to artists
+              </Link>
+              <Link href="/songs-to-albums" className="link">
+                Add songs to albums
+              </Link>
+            </div>
+          </div>
+        </div>
       </main>
     </>
   );
