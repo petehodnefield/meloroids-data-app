@@ -17,3 +17,21 @@ export const ALBUM_TO_ARTIST = gql`
     }
   }
 `;
+
+export const SONG_TO_ALBUM = gql`
+  mutation Mutation($id: ID!, $songId: ID!) {
+    updateAlbum(_id: $id, song_id: $songId) {
+      _id
+      album_name
+      artwork
+      year
+      popularity
+      songs {
+        _id
+        song_name
+        tempo
+        popularity
+      }
+    }
+  }
+`;

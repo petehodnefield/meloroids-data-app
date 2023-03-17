@@ -17,6 +17,7 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <Link href="/album-to-artist">Add albums to artists</Link>
+        <Link href="/songs-to-albums">Add songs to albums</Link>
       </main>
     </>
   );
