@@ -3,9 +3,11 @@ import Link from "next/link";
 const Layout = ({ children }) => {
   return (
     <div>
-      <Link href="/">
-        <h1>Home</h1>
-      </Link>
+      <header>
+        <Link href="/">
+          <h1>Meloroids Data Application</h1>
+        </Link>
+      </header>
       <main>{children}</main>
     </div>
   );
