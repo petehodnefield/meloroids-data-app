@@ -54,3 +54,31 @@ export const ALL_ALBUMS = gql`
     }
   }
 `;
+
+export const ALL_GENRES = gql`
+  query Query {
+    genres {
+      _id
+      genre
+      progressions {
+        _id
+        numerals
+        is_major
+      }
+    }
+  }
+`;
+
+export const ALL_PROGRESSIONS = gql`
+  query Query {
+    progressions {
+      _id
+      numerals
+      is_major
+      all_keys {
+        key
+        progression_in_key
+      }
+    }
+  }
+`;

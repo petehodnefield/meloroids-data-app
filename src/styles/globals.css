@@ -1,6 +1,7 @@
 :root {
   --primary: #bb39fa;
   --tertiary: #efecf0;
+  --blue: #3b7ee2;
   --white: #ffffff;
   --dark: #2c2c2c;
 }
@@ -123,7 +124,32 @@ header {
 }
 .form-input-label-wrapper {
   margin-bottom: 1.5rem;
+  position: relative;
 }
+
+.select-open-wrapper {
+  border: 1px solid var(--tertiary);
+  position: absolute;
+  z-index: 2;
+  background-color: var(--white);
+  width: 20rem;
+  border-radius: 8px;
+}
+
+.select-open-option {
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  padding-left: 1rem;
+}
+.select-open-option:hover {
+  cursor: pointer;
+  color: var(--white);
+  border-radius: 8px;
+  background-color: var(--blue);
+  transition-duration: 100ms;
+}
+
 .form-label {
   font-size: 0.875rem;
   font-weight: 600;
