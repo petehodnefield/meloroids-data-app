@@ -17,7 +17,7 @@ body {
 }
 
 body {
-  color: var(--white);
+  color: var(--darl);
   background: var(--white);
 }
 
@@ -26,10 +26,24 @@ a {
   color: var(--white);
 }
 
+.dark {
+  color: var(--dark);
+}
+.white {
+  color: var(--white);
+}
 h2 {
   font-size: 1.5rem;
   margin-bottom: 2rem;
   font-weight: 600;
+}
+
+.center-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 3rem;
 }
 
 /* Header style */
@@ -71,4 +85,69 @@ header {
 .page-link:hover {
   color: var(--tertiary);
   transition-duration: 200ms;
+}
+
+/* Button styling */
+.btn {
+  font-size: 1rem;
+  font-weight: 600;
+  height: 3rem;
+  width: 100%;
+  max-width: 11.25rem;
+  cursor: pointer;
+  border: none;
+}
+.btn:hover {
+  opacity: 0.85;
+  transition-duration: 100ms;
+}
+.btn-round {
+  border-radius: 0.5rem;
+}
+.btn-dark {
+  background-color: var(--dark);
+  color: var(--white);
+}
+
+/* Form Styling */
+.select-wrapper {
+  height: 3rem;
+  border: 1px solid var(--tertiary);
+  width: 20rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.form-input-label-wrapper {
+  margin-bottom: 1.5rem;
+}
+.form-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.select-text {
+  font-size: 0.875rem;
+  font-weight: 600;
+  width: 100%;
+  margin-left: 0.5rem;
+}
+
+.select-icon {
+  margin: 0 1rem;
+}
+
+.select-chevron {
+  margin: 0 1rem;
+  font-size: 0.75rem;
+}
+
+.grid-btns {
+  display: grid;
+  grid-template-columns: repeat(2, 9.75rem);
+  justify-items: center;
+  gap: 0.5rem;
 }

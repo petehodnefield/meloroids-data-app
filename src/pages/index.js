@@ -10,7 +10,7 @@ export default function Home() {
     <section className="homepage-wrapper">
       {/* Queries container */}
       <div className="query-mutation-wrapper">
-        <h2 className="h2">Queries</h2>
+        <h2 className="h2 white">Queries</h2>
         <ul>
           <li className="link-li">
             <Link className="page-link" href={"/genres"}>
@@ -36,7 +36,7 @@ export default function Home() {
       </div>
       {/* Mutations container */}
       <div className="query-mutation-wrapper">
-        <h2 className="h2">Mutations</h2>
+        <h2 className="h2 white">Mutations</h2>
         <ul>
           <li className="link-li">
             <Link className="page-link" href={"/progression-to-genre"}>
