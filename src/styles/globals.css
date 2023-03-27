@@ -98,6 +98,7 @@ header {
   max-width: 11.25rem;
   cursor: pointer;
   border: none;
+  color: var(--white);
 }
 .btn:hover {
   opacity: 0.85;
@@ -109,6 +110,15 @@ header {
 .btn-dark {
   background-color: var(--dark);
   color: var(--white);
+}
+.btn-primary {
+  background-color: var(--primary);
+}
+
+.btn-p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Form Styling */

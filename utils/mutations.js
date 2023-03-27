@@ -35,3 +35,18 @@ export const SONG_TO_ALBUM = gql`
     }
   }
 `;
+
+export const PROGRESSION_TO_GENRE = gql`
+  mutation Mutation($id: ID!, $progressionId: ID!) {
+    updateGenre(_id: $id, progression_id: $progressionId) {
+      _id
+      genre
+      progressions {
+        _id
+        numerals
+
+        is_major
+      }
+    }
+  }
+`;
