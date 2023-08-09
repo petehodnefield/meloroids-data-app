@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { initializeApollo } from "../../../../lib/apollo";
 import { ALBUM, ALL_PROGRESSIONS, ALL_KEYS } from "../../../../utils/queries";
-import { DELETE_ALBUM } from "../../../../utils/mutations";
+import { DELETE_ALBUM, CREATE_SONG } from "../../../../utils/mutations";
 import { useQuery, useMutation } from "@apollo/client";
 import style from "@/styles/IndividualAlbum.module.css";
 const ArtistsAlbums = ({ queryID }) => {
@@ -19,12 +19,15 @@ const ArtistsAlbums = ({ queryID }) => {
     key: "",
     progression: "",
   });
+  console.log(albumDetails.album_id, newSongParams);
+
   const [specificKeys, setSpecificKeys] = useState([]);
   const [specificProgressions, setSpecificProgressions] = useState([]);
   const [keyDropdown, setKeyDropdown] = useState(false);
   const [progressionDropdown, setProgressionDropdown] = useState(false);
 
   const [deleteAlbum] = useMutation(DELETE_ALBUM);
+  const [createSong] = useMutation(CREATE_SONG);
   const { loading, data, error } = useQuery(ALBUM, {
     variables: { albumId: queryID.params[0] },
   });
@@ -75,6 +78,24 @@ const ArtistsAlbums = ({ queryID }) => {
     );
     setSpecificProgressions(results);
   };
+
+  const handleNewSong = async (e) => {
+    e.preventDefault();
+    try {
+      await createSong({
+        variables: {
+          songName: newSongParams.name,
+          tempo: newSongParams.tempo,
+          progressionId: newSongParams.progression,
+          keyId: newSongParams.key,
+          albumId: albumDetails.album_id,
+        },
+      });
+      window.location.reload();
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <div className={style.container}>
       <div
@@ -115,7 +136,7 @@ const ArtistsAlbums = ({ queryID }) => {
           <h3 className={style.addSongsTitle}>
             Add songs to {albumDetails.album_name}
           </h3>
-          <form className="form--column">
+          <form onSubmit={(e) => handleNewSong(e)} className="form--column">
             <div className="form__input-label-wrapper">
               <label className="form__label">Song name</label>
               <input
@@ -132,7 +153,10 @@ const ArtistsAlbums = ({ queryID }) => {
                 className="form__input"
                 type="number"
                 onChange={(e) =>
-                  setNewSongParams({ ...newSongParams, tempo: e.target.value })
+                  setNewSongParams({
+                    ...newSongParams,
+                    tempo: Number(e.target.value),
+                  })
                 }
               />
             </div>

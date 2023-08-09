@@ -18,20 +18,25 @@ export const ALBUM_TO_ARTIST = gql`
   }
 `;
 
-export const SONG_TO_ALBUM = gql`
-  mutation Mutation($id: ID!, $songId: ID!) {
-    updateAlbum(_id: $id, song_id: $songId) {
+export const CREATE_SONG = gql`
+  mutation Mutation(
+    $songName: String!
+    $tempo: Int!
+    $progressionId: ID!
+    $albumId: ID!
+    $keyId: ID!
+  ) {
+    createSong(
+      song_name: $songName
+      tempo: $tempo
+      progression_id: $progressionId
+      album_id: $albumId
+      key_id: $keyId
+    ) {
       _id
-      album_name
-      artwork
-      year
+      song_name
+      tempo
       popularity
-      songs {
-        _id
-        song_name
-        tempo
-        popularity
-      }
     }
   }
 `;
