@@ -19,15 +19,17 @@ const ArtistsAlbums = ({ queryID }) => {
     key: "",
     progression: "",
   });
-  console.log("newSong", newSongParams);
   const [specificKeys, setSpecificKeys] = useState([]);
+  const [specificProgressions, setSpecificProgressions] = useState([]);
+  const [keyDropdown, setKeyDropdown] = useState(false);
+  const [progressionDropdown, setProgressionDropdown] = useState(false);
+
   const [deleteAlbum] = useMutation(DELETE_ALBUM);
   const { loading, data, error } = useQuery(ALBUM, {
     variables: { albumId: queryID.params[0] },
   });
   const { data: keysData } = useQuery(ALL_KEYS);
   const { data: progressionData } = useQuery(ALL_PROGRESSIONS);
-
   useEffect(() => {
     if (!data || data.album === null || !data.album) {
       return;
@@ -62,8 +64,16 @@ const ArtistsAlbums = ({ queryID }) => {
   };
 
   const filterKeys = (e) => {
-    const results = keysData.keys.filter((key) => key.key === e);
+    const results = keysData.keys.filter((key) =>
+      key.key.toLowerCase().includes(e.toLowerCase())
+    );
     setSpecificKeys(results);
+  };
+  const filterProgressions = (e) => {
+    const results = progressionData.progressions.filter((progression) =>
+      progression.numerals.toLowerCase().includes(e.toLowerCase())
+    );
+    setSpecificProgressions(results);
   };
   return (
     <div className={style.container}>
@@ -108,16 +118,25 @@ const ArtistsAlbums = ({ queryID }) => {
           <form className="form--column">
             <div className="form__input-label-wrapper">
               <label className="form__label">Song name</label>
-              <input className="form__input" type="text" />
+              <input
+                className="form__input"
+                type="text"
+                onChange={(e) =>
+                  setNewSongParams({ ...newSongParams, name: e.target.value })
+                }
+              />
             </div>
             <div className="form__input-label-wrapper">
               <label className="form__label">Tempo</label>
-              <input className="form__input" type="number" />
+              <input
+                className="form__input"
+                type="number"
+                onChange={(e) =>
+                  setNewSongParams({ ...newSongParams, tempo: e.target.value })
+                }
+              />
             </div>
-            <div className="form__input-label-wrapper">
-              <label className="form__label">Popularity</label>
-              <input className="form__input" type="text" />
-            </div>{" "}
+
             <div className="form__input-label-wrapper">
               <label className="form__label">Key</label>
               <input
@@ -145,20 +164,39 @@ const ArtistsAlbums = ({ queryID }) => {
                 ) : (
                   ""
                 )}
-                {/* {keysData
-                  ? keysData.keys.map((key) => (
-                      <div
-                        key={`${key.key} ${key.is_major ? "major" : "minor"}`}
-                      >
-                        {key.key} {key.is_major ? "Major" : "Minor"}
-                      </div>
-                    ))
-                  : ""} */}
               </div>
             </div>
             <div className="form__input-label-wrapper">
               <label className="form__label">Progression</label>
-              <input className="form__input" type="text" />
+              <input
+                className="form__input"
+                type="text"
+                onChange={(e) => {
+                  filterProgressions(e.target.value);
+                  setProgressionDropdown(true);
+                }}
+              />
+              {specificProgressions ? (
+                <div>
+                  {specificProgressions.map((specific) => (
+                    <div
+                      key={`${specific.numerals} `}
+                      onClick={() => {
+                        setNewSongParams({
+                          ...newSongParams,
+                          progression: specific._id,
+                        });
+                        setProgressionDropdown(!progressionDropdown);
+                      }}
+                    >
+                      {specific.numerals}{" "}
+                    </div>
+                  ))}
+                  {/* Add a new progression */}
+                </div>
+              ) : (
+                ""
+              )}
             </div>
             <button className="btn btn-primary rounded" type="submit">
               Add song
