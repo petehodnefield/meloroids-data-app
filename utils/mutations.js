@@ -56,6 +56,27 @@ export const PROGRESSION_TO_GENRE = gql`
   }
 `;
 
+export const CREATE_ALBUM = gql`
+  mutation CreateAlbum(
+    $albumName: String!
+    $artwork: String!
+    $year: String!
+    $artistId: ID!
+  ) {
+    createAlbum(
+      album_name: $albumName
+      artwork: $artwork
+      year: $year
+      artist_id: $artistId
+    ) {
+      _id
+      album_name
+      artwork
+      year
+      popularity
+    }
+  }
+`;
 export const DELETE_ALBUM = gql`
   mutation Mutation($id: ID!) {
     deleteAlbum(_id: $id) {

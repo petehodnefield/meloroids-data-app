@@ -17,7 +17,10 @@ const ArtistsAlbums = ({ queryID }) => {
     name: "",
     tempo: "",
     key: "",
-    progression: "",
+    keyId: "",
+    keyMajor: "",
+    progressionId: "",
+    progressionNumerals: "",
   });
   console.log(albumDetails.album_id, newSongParams);
 
@@ -86,8 +89,8 @@ const ArtistsAlbums = ({ queryID }) => {
         variables: {
           songName: newSongParams.name,
           tempo: newSongParams.tempo,
-          progressionId: newSongParams.progression,
-          keyId: newSongParams.key,
+          progressionId: newSongParams.progressionId,
+          keyId: newSongParams.keyId,
           albumId: albumDetails.album_id,
         },
       });
@@ -142,9 +145,10 @@ const ArtistsAlbums = ({ queryID }) => {
               <input
                 className="form__input"
                 type="text"
-                onChange={(e) =>
-                  setNewSongParams({ ...newSongParams, name: e.target.value })
-                }
+                onChange={(e) => {
+                  setNewSongParams({ ...newSongParams, name: e.target.value });
+                  setKeyDropdown(true);
+                }}
               />
             </div>
             <div className="form__input-label-wrapper">
@@ -163,23 +167,40 @@ const ArtistsAlbums = ({ queryID }) => {
 
             <div className="form__input-label-wrapper">
               <label className="form__label">Key</label>
-              <input
-                className="form__input"
-                type="text"
-                onChange={(e) => filterKeys(e.target.value)}
-              />
               <div>
-                {specificKeys ? (
-                  <div>
+                <input
+                  className="form__input"
+                  type="text"
+                  onChange={(e) => {
+                    filterKeys(e.target.value);
+                    setKeyDropdown(true);
+                  }}
+                />
+                {newSongParams.key ? (
+                  <p>
+                    Selected key: {newSongParams.key}{" "}
+                    {newSongParams.keyMajor ? "major" : "minor"}
+                  </p>
+                ) : (
+                  ""
+                )}
+              </div>
+              <div>
+                {keyDropdown ? (
+                  <div className="dropdown__wrapper">
                     {specificKeys.map((specific) => (
                       <div
+                        className="dropdown"
                         key={`${specific.key} ${specific.is_major}`}
-                        onClick={() =>
+                        onClick={() => {
                           setNewSongParams({
                             ...newSongParams,
-                            key: specific._id,
-                          })
-                        }
+                            key: specific.key,
+                            keyMajor: specific.is_major,
+                            keyId: specific._id,
+                          });
+                          setKeyDropdown(false);
+                        }}
                       >
                         {specific.key} {specific.is_major ? "major" : "minor"}
                       </div>
@@ -192,23 +213,34 @@ const ArtistsAlbums = ({ queryID }) => {
             </div>
             <div className="form__input-label-wrapper">
               <label className="form__label">Progression</label>
-              <input
-                className="form__input"
-                type="text"
-                onChange={(e) => {
-                  filterProgressions(e.target.value);
-                  setProgressionDropdown(true);
-                }}
-              />
-              {specificProgressions ? (
-                <div>
+              <div>
+                <input
+                  className="form__input"
+                  type="text"
+                  onChange={(e) => {
+                    filterProgressions(e.target.value);
+                    setProgressionDropdown(true);
+                  }}
+                ></input>
+                {newSongParams.progressionNumerals ? (
+                  <p>
+                    Selected Progression: {newSongParams.progressionNumerals}
+                  </p>
+                ) : (
+                  ""
+                )}
+              </div>
+              {progressionDropdown ? (
+                <div className="dropdown__wrapper">
                   {specificProgressions.map((specific) => (
                     <div
+                      className="dropdown"
                       key={`${specific.numerals} `}
                       onClick={() => {
                         setNewSongParams({
                           ...newSongParams,
-                          progression: specific._id,
+                          progressionId: specific._id,
+                          progressionNumerals: specific.numerals,
                         });
                         setProgressionDropdown(!progressionDropdown);
                       }}
