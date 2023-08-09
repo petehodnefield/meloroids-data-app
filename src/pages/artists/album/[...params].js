@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { initializeApollo } from "../../../../lib/apollo";
 import { ALBUM, ALL_PROGRESSIONS, ALL_KEYS } from "../../../../utils/queries";
-import { DELETE_ALBUM, CREATE_SONG } from "../../../../utils/mutations";
+import {
+  DELETE_ALBUM,
+  CREATE_SONG,
+  DELETE_SONG,
+} from "../../../../utils/mutations";
 import { useQuery, useMutation } from "@apollo/client";
 import style from "@/styles/IndividualAlbum.module.css";
+import Link from "next/link";
+import EditSongModal from "@/components/Modals/EditSongModal";
 const ArtistsAlbums = ({ queryID }) => {
   const [albumDetails, setAlbumDetails] = useState({
     album_id: "",
@@ -12,7 +18,10 @@ const ArtistsAlbums = ({ queryID }) => {
     album_year: "",
     album_songs: [],
   });
-
+  const [editSongDetails, setEditSongDetails] = useState({
+    name: "",
+    tempo: "",
+  });
   const [newSongParams, setNewSongParams] = useState({
     name: "",
     tempo: "",
@@ -22,15 +31,16 @@ const ArtistsAlbums = ({ queryID }) => {
     progressionId: "",
     progressionNumerals: "",
   });
-  console.log(albumDetails.album_id, newSongParams);
 
   const [specificKeys, setSpecificKeys] = useState([]);
   const [specificProgressions, setSpecificProgressions] = useState([]);
   const [keyDropdown, setKeyDropdown] = useState(false);
   const [progressionDropdown, setProgressionDropdown] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const [deleteAlbum] = useMutation(DELETE_ALBUM);
   const [createSong] = useMutation(CREATE_SONG);
+  const [deleteSong] = useMutation(DELETE_SONG);
   const { loading, data, error } = useQuery(ALBUM, {
     variables: { albumId: queryID.params[0] },
   });
@@ -61,6 +71,7 @@ const ArtistsAlbums = ({ queryID }) => {
         await deleteAlbum({
           variables: { id: albumDetails.album_id },
         });
+        window.location.replace("/artists");
       } catch (e) {
         console.log(e);
       }
@@ -99,8 +110,35 @@ const ArtistsAlbums = ({ queryID }) => {
       console.log(e);
     }
   };
+  const handleSongDeletion = async (songId, songName) => {
+    const confirm = window.confirm(
+      `Are you sure you want to delete ${songName}?`
+    );
+    if (!confirm) {
+      return;
+    } else {
+      try {
+        await deleteSong({
+          variables: {
+            id: songId,
+          },
+        });
+        window.location.reload();
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
   return (
     <div className={style.container}>
+      {modalOpen ? (
+        <EditSongModal
+          songDetails={editSongDetails}
+          setModalOpen={setModalOpen}
+        />
+      ) : (
+        ""
+      )}
       <div
         style={{
           backgroundImage: `url(${albumDetails.album_artwork})`,
@@ -116,28 +154,69 @@ const ArtistsAlbums = ({ queryID }) => {
           >
             Delete Album
           </button>
+          <Link href={`/artists`}>Back</Link>
         </div>
       </div>
 
       <section className={style.containerRow}>
         {/* Map through songs */}
         <div className={style.albumDetails}>
-          <h3 className={style.albumDetailsTitle}>
-            Songs on {albumDetails.album_name}
+          <h3 className={`title--md`}>
+            Songs on{" "}
+            <span className="bold text--primary">
+              {albumDetails.album_name}
+            </span>
           </h3>
-          <div>
-            {albumDetails.album_songs.map((song) => (
-              <div>
-                <h3>{song.song_name}</h3>
-              </div>
-            ))}
+          <div className="card card--align-start card--lg">
+            {albumDetails.album_songs.length >= 0 ? (
+              albumDetails.album_songs.map((song) => (
+                <div className="card__row">
+                  <div className="card__row-content-wrapper">
+                    <img
+                      className="card__row-img"
+                      src={`${albumDetails.album_artwork}`}
+                    />
+                    {song.song_name}
+                  </div>
+                  <div className="card__row-action-wrapper">
+                    <p
+                      className="card__row-action"
+                      onClick={() => {
+                        setEditSongDetails({
+                          ...editSongDetails,
+                          name: song.song_name,
+                          tempo: song.tempo,
+                          id: song._id,
+                        });
+                        setModalOpen(true);
+                      }}
+                    >
+                      Edit
+                    </p>
+                    <p
+                      className="card__row-action"
+                      onClick={() =>
+                        handleSongDeletion(song._id, song.song_name)
+                      }
+                    >
+                      Delete
+                    </p>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p>Hello</p>
+            )}
           </div>
         </div>
 
         {/* Add songs form */}
         <div className={style.addSongsContainer}>
-          <h3 className={style.addSongsTitle}>
-            Add songs to {albumDetails.album_name}
+          <h3 className={`title--md`}>
+            Add songs to{" "}
+            <span className="bold text--primary">
+              {albumDetails.album_name}
+            </span>
           </h3>
           <form onSubmit={(e) => handleNewSong(e)} className="form--column">
             <div className="form__input-label-wrapper">

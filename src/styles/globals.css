@@ -41,13 +41,19 @@ a {
   color: var(--dark);
 }
 
+/* General font weight/color properties */
 .dark {
   color: var(--dark);
 }
 .white {
   color: var(--white);
 }
-
+.bold {
+  font-weight: 600;
+}
+.text--primary {
+  color: var(--primary);
+}
 .center-container {
   display: flex;
   flex-direction: column;
@@ -100,7 +106,21 @@ header {
   color: var(--tertiary);
   transition-duration: 200ms;
 }
-
+.back-link {
+  position: absolute;
+  left: 10vw;
+}
+/* Titles styling */
+.title--sm {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  font-weight: 400;
+}
+.title--md {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
 /* Button styling */
 .btn {
   font-size: 1rem;
@@ -292,4 +312,87 @@ header {
   width: 100%;
   border-bottom-left-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
+}
+
+/* General Cards */
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 1rem;
+  background-color: var(--white);
+  box-shadow: var(--bs1);
+}
+.card--lg {
+  width: 20rem;
+}
+.card--align-start {
+  align-items: flex-start;
+}
+.card__row {
+  height: 3rem;
+  border-bottom: 1px solid var(--light);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 0.5rem 1rem;
+}
+.card__row:hover {
+  cursor: pointer;
+  background-color: var(--blue);
+  border-radius: 0.25rem;
+  color: var(--white);
+  transition: 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+.card__row-content-wrapper {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.card__row-img {
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.25rem;
+  margin-right: 1rem;
+}
+
+.card__row-action-wrapper {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: 3rem;
+}
+.card__row-action {
+  font-size: 0.875rem;
+}
+.card__row-action:hover {
+  color: red;
+}
+
+/* Modals Styling */
+.modal {
+  position: absolute;
+  z-index: 2;
+  margin: auto 0;
+  background-color: var(--white);
+  height: 50vh;
+  width: 80vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.25rem;
+  border: 2px solid var(--dark);
+  flex-direction: column;
+}
+.modal__close {
+  cursor: pointer;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.5rem 2rem;
+  border-radius: 100vmax;
+  border: 1px solid var(--light);
+  background-color: red;
 }

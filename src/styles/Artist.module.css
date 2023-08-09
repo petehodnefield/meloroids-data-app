@@ -5,11 +5,25 @@
   gap: 4rem;
   padding-top: 3rem;
 }
-.artist {
-  max-width: 70rem;
-  width: 100%;
+.row {
   display: flex;
-  justify-content: flex-start;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  max-width: 70rem;
+  position: relative;
+}
+.artist {
+  flex: 1 1 0;
+  display: flex;
+  justify-content: center;
+}
+.addAlbum {
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 }
 .artistNameWrapper {
   max-width: 70rem;
@@ -44,7 +58,7 @@
 .albums {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   max-width: 70rem;
 }
 .subtitle {
@@ -54,8 +68,7 @@
 }
 /* Grid that has all albums */
 .albumsWrapper {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  display: flex;
   gap: 1rem;
 }
 .albumWrapper {

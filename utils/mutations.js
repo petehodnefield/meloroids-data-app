@@ -88,13 +88,38 @@ export const DELETE_ALBUM = gql`
     }
   }
 `;
-
+export const DELETE_SONG = gql`
+  mutation DeleteSong($id: ID!) {
+    deleteSong(_id: $id) {
+      _id
+      song_name
+      tempo
+    }
+  }
+`;
 export const ALL_KEYS = gql`
   query Query {
     keys {
       _id
       key
       is_major
+    }
+  }
+`;
+export const UPDATE_SONG = gql`
+  mutation Mutation($id: ID!, $songName: String, $tempo: Int) {
+    updateSong(_id: $id, song_name: $songName, tempo: $tempo) {
+      _id
+      song_name
+      tempo
+      popularity
+      key {
+        _id
+      }
+      progression {
+        _id
+        numerals
+      }
     }
   }
 `;
