@@ -50,3 +50,15 @@ export const PROGRESSION_TO_GENRE = gql`
     }
   }
 `;
+
+export const DELETE_ALBUM = gql`
+  mutation Mutation($id: ID!) {
+    deleteAlbum(_id: $id) {
+      _id
+      album_name
+      artwork
+      year
+      popularity
+    }
+  }
+`;

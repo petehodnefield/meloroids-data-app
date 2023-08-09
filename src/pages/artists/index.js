@@ -1,34 +1,27 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
 import { ALL_ARTISTS } from "../../../utils/queries";
-
+import Link from "next/link";
 const Artists = () => {
   const { loading, data, error } = useQuery(ALL_ARTISTS);
   if (loading) return <div> Loading...</div>;
 
   console.log(data);
   return (
-    <div>
-      <h2 className="header">ARTISTS</h2>
+    <div className="container">
+      <h2 className="artist__pgHeader">ARTISTS</h2>
       <div className="artist-grid">
         {data.artists.map((artist) => (
-          <div>
-            <h2>{artist.name}</h2>
-            <div className="artist-imgWrapper">
-              <img className="artist-img" src={artist.image} />
+          <Link
+            className="artist"
+            key={artist.name}
+            href={`/artists/${artist.name}`}
+          >
+            <h2 className="artist__title">{artist.name}</h2>
+            <div className="artist__imgWrapper">
+              <img className="artist__img" src={artist.image} />
             </div>
-            <h3 className="sub-header">Albums:</h3>
-            <div className="albumsWrapper">
-              {artist.albums.map((album) => (
-                <div className="container">
-                  <div className="album-imgWrapper">
-                    <img className="album-img" src={album.artwork} />
-                  </div>{" "}
-                  {album.album_name}
-                </div>
-              ))}
-            </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

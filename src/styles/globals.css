@@ -4,6 +4,7 @@
   --blue: #3b7ee2;
   --white: #ffffff;
   --dark: #2c2c2c;
+  --bs1: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 * {
   box-sizing: border-box;
@@ -19,13 +20,23 @@ body {
 }
 
 body {
-  color: var(--darl);
+  color: var(--dark);
   background: var(--white);
 }
-
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+li,
+a {
+  margin: 0;
+  padding: 0;
+}
 a {
   text-decoration: none;
-  color: var(--white);
+  color: var(--dark);
 }
 
 .dark {
@@ -33,11 +44,6 @@ a {
 }
 .white {
   color: var(--white);
-}
-h2 {
-  font-size: 1.5rem;
-  margin-bottom: 2rem;
-  font-weight: 600;
 }
 
 .center-container {
@@ -61,19 +67,23 @@ header {
 .homepage-wrapper {
   display: flex;
   justify-content: center;
-  gap: 10rem;
+  gap: 3rem;
   padding-top: 3rem;
+  height: 100vh;
 }
 .query-mutation-wrapper {
-  background-color: var(--dark);
+  background-color: var(--white);
+  box-shadow: var(--bs1);
+  color: var(--dark);
   border-radius: 0.5rem;
+  gap: 1rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem 4rem 3rem;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 2rem 3rem 3rem;
   max-width: fit-content;
-  height: fit-content;
+  height: 20rem;
 }
 
 .link-li {
@@ -120,8 +130,19 @@ header {
   align-items: center;
   justify-content: center;
 }
-
+.rounded {
+  border-radius: 0.5rem;
+}
 /* Form Styling */
+.form--column {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1.5rem;
+  background-color: var(--white);
+  box-shadow: var(--bs1);
+  border-radius: 1rem;
+  width: fit-content;
+}
 .select-wrapper {
   height: 3rem;
   border: 1px solid var(--tertiary);
@@ -132,9 +153,11 @@ header {
   justify-content: space-between;
   cursor: pointer;
 }
-.form-input-label-wrapper {
+.form__input-label-wrapper {
   margin-bottom: 1.5rem;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .select-open-wrapper {
@@ -160,12 +183,20 @@ header {
   transition-duration: 100ms;
 }
 
-.form-label {
+.form__label {
   font-size: 0.875rem;
   font-weight: 600;
   margin-bottom: 0.25rem;
 }
-
+.form__input {
+  height: 3rem;
+  width: 20rem;
+  border-radius: 0.5rem;
+  padding-left: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border: 1px solid var(--dark);
+}
 .select-text {
   font-size: 0.875rem;
   font-weight: 600;
@@ -187,4 +218,55 @@ header {
   grid-template-columns: repeat(2, 9.75rem);
   justify-items: center;
   gap: 0.5rem;
+}
+/* General Container Style */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 0;
+}
+/* All artists page */
+.artist__pgHeader {
+  font-size: 2rem;
+}
+.artist-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  justify-items: center;
+  padding: 2rem 1.5rem;
+  gap: 1rem;
+}
+.artist {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  background-color: var(--white);
+  box-shadow: var(--bs1);
+  border-radius: 1rem;
+  width: 100%;
+}
+.artist__title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+.artist__subtitle {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.artist__imgWrapper {
+  height: 12rem;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.artist__img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
 }

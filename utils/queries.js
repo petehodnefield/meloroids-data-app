@@ -82,3 +82,80 @@ export const ALL_PROGRESSIONS = gql`
     }
   }
 `;
+export const ARTIST_ALL_SONGS = gql`
+  query Artistallsongs($name: String!) {
+    artistallsongs(name: $name) {
+      _id
+      name
+      age
+      image
+      songs {
+        _id
+        song_name
+        tempo
+        key {
+          _id
+          key
+          is_major
+        }
+        progression {
+          _id
+          numerals
+          is_major
+        }
+      }
+    }
+  }
+`;
+
+export const ARTIST_BY_NAME = gql`
+  query Artist($name: String!) {
+    artist(name: $name) {
+      _id
+      name
+      age
+      image
+      albums {
+        _id
+        album_name
+        artwork
+        year
+        popularity
+      }
+      songs {
+        _id
+        song_name
+        tempo
+        key {
+          _id
+          key
+          is_major
+        }
+        popularity
+        progression {
+          _id
+          numerals
+          is_major
+        }
+      }
+    }
+  }
+`;
+
+export const ALBUM = gql`
+  query Album($albumId: ID!) {
+    album(id: $albumId) {
+      _id
+      album_name
+      artwork
+      year
+      popularity
+      songs {
+        _id
+        song_name
+        tempo
+        popularity
+      }
+    }
+  }
+`;
