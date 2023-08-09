@@ -62,3 +62,13 @@ export const DELETE_ALBUM = gql`
     }
   }
 `;
+
+export const ALL_KEYS = gql`
+  query Query {
+    keys {
+      _id
+      key
+      is_major
+    }
+  }
+`;

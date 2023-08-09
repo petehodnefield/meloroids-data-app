@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { initializeApollo } from "../../../../lib/apollo";
-import { ALBUM } from "../../../../utils/queries";
+import { ALBUM, ALL_PROGRESSIONS, ALL_KEYS } from "../../../../utils/queries";
 import { DELETE_ALBUM } from "../../../../utils/mutations";
 import { useQuery, useMutation } from "@apollo/client";
 import style from "@/styles/IndividualAlbum.module.css";
@@ -12,10 +12,21 @@ const ArtistsAlbums = ({ queryID }) => {
     album_year: "",
     album_songs: [],
   });
+
+  const [newSongParams, setNewSongParams] = useState({
+    name: "",
+    tempo: "",
+    key: "",
+    progression: "",
+  });
+  console.log("newSong", newSongParams);
+  const [specificKeys, setSpecificKeys] = useState([]);
   const [deleteAlbum] = useMutation(DELETE_ALBUM);
   const { loading, data, error } = useQuery(ALBUM, {
     variables: { albumId: queryID.params[0] },
   });
+  const { data: keysData } = useQuery(ALL_KEYS);
+  const { data: progressionData } = useQuery(ALL_PROGRESSIONS);
 
   useEffect(() => {
     if (!data || data.album === null || !data.album) {
@@ -48,6 +59,11 @@ const ArtistsAlbums = ({ queryID }) => {
     } else {
       return;
     }
+  };
+
+  const filterKeys = (e) => {
+    const results = keysData.keys.filter((key) => key.key === e);
+    setSpecificKeys(results);
   };
   return (
     <div className={style.container}>
@@ -101,14 +117,47 @@ const ArtistsAlbums = ({ queryID }) => {
             <div className="form__input-label-wrapper">
               <label className="form__label">Popularity</label>
               <input className="form__input" type="text" />
+            </div>{" "}
+            <div className="form__input-label-wrapper">
+              <label className="form__label">Key</label>
+              <input
+                className="form__input"
+                type="text"
+                onChange={(e) => filterKeys(e.target.value)}
+              />
+              <div>
+                {specificKeys ? (
+                  <div>
+                    {specificKeys.map((specific) => (
+                      <div
+                        key={`${specific.key} ${specific.is_major}`}
+                        onClick={() =>
+                          setNewSongParams({
+                            ...newSongParams,
+                            key: specific._id,
+                          })
+                        }
+                      >
+                        {specific.key} {specific.is_major ? "major" : "minor"}
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  ""
+                )}
+                {/* {keysData
+                  ? keysData.keys.map((key) => (
+                      <div
+                        key={`${key.key} ${key.is_major ? "major" : "minor"}`}
+                      >
+                        {key.key} {key.is_major ? "Major" : "Minor"}
+                      </div>
+                    ))
+                  : ""} */}
+              </div>
             </div>
             <div className="form__input-label-wrapper">
               <label className="form__label">Progression</label>
-              <input className="form__input" type="text" />
-            </div>
-
-            <div className="form__input-label-wrapper">
-              <label className="form__label">Key</label>
               <input className="form__input" type="text" />
             </div>
             <button className="btn btn-primary rounded" type="submit">
@@ -125,7 +174,6 @@ export default ArtistsAlbums;
 export const getServerSideProps = async ({ query }) => {
   const queryID = query;
   const apolloClient = initializeApollo();
-  console.log(queryID.params);
   await apolloClient.query({
     query: ALBUM,
     variables: { albumId: queryID.params[0] },

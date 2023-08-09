@@ -76,8 +76,10 @@ export const ALL_PROGRESSIONS = gql`
       numerals
       is_major
       all_keys {
+        _id
         key
         progression_in_key
+        midi_file
       }
     }
   }
@@ -156,6 +158,15 @@ export const ALBUM = gql`
         tempo
         popularity
       }
+    }
+  }
+`;
+export const ALL_KEYS = gql`
+  query Query {
+    keys {
+      _id
+      key
+      is_major
     }
   }
 `;
