@@ -4,7 +4,7 @@ const SongDetailsModal = ({ songDetails, setSongDetailsModalOpen }) => {
   console.log(songDetails);
   return (
     <div
-      className="modal"
+      className="modal modal--song-details"
       style={{ backgroundImage: `url(${songDetails.album_artwork})` }}
     >
       {" "}
@@ -14,11 +14,17 @@ const SongDetailsModal = ({ songDetails, setSongDetailsModalOpen }) => {
       >
         Close
       </button>
-      <div className="card  card--sm card--align-center">
-        <h2 className="title--md">"{songDetails.name}"</h2>
-        <p>Tempo: {songDetails.tempo}</p>
-        <p>Key: {songDetails.key}</p>
-        <p>Progression: {songDetails.progression}</p>
+      <div className="modal__content">
+        <h2 className="modal__title">"{songDetails.name}"</h2>
+        <p className="modal__text">
+          <span className="bold">Tempo:</span> {songDetails.tempo} bpm
+        </p>
+        <p className="modal__text">
+          <span className="bold">Key:</span> {songDetails.key}
+        </p>
+        <p className="modal__text">
+          <span className="bold">Progression:</span> {songDetails.progression}
+        </p>
       </div>
     </div>
   );

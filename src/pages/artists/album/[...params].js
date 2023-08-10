@@ -202,10 +202,12 @@ const ArtistsAlbums = ({ queryID }) => {
                       progression: song.progression[0].numerals,
                       album_artwork: albumDetails.album_artwork,
                     });
-                    setSongDetailsModalOpen(true);
                   }}
                 >
-                  <div className="card__row-content-wrapper">
+                  <div
+                    className="card__row-content-wrapper"
+                    onClick={() => setSongDetailsModalOpen(true)}
+                  >
                     <img
                       className="card__row-img"
                       src={`${albumDetails.album_artwork}`}
