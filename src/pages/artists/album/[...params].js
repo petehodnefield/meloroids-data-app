@@ -10,6 +10,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import style from "@/styles/IndividualAlbum.module.css";
 import Link from "next/link";
 import EditSongModal from "@/components/Modals/EditSongModal";
+import SongDetailsModal from "@/components/Modals/SongDetailsModal";
 const ArtistsAlbums = ({ queryID }) => {
   const [albumDetails, setAlbumDetails] = useState({
     album_id: "",
@@ -21,6 +22,13 @@ const ArtistsAlbums = ({ queryID }) => {
   const [editSongDetails, setEditSongDetails] = useState({
     name: "",
     tempo: "",
+  });
+  const [songDetails, setSongDetails] = useState({
+    name: "",
+    tempo: "",
+    key: {},
+    progression: {},
+    album_artwork: "",
   });
   const [newSongParams, setNewSongParams] = useState({
     name: "",
@@ -37,6 +45,7 @@ const ArtistsAlbums = ({ queryID }) => {
   const [keyDropdown, setKeyDropdown] = useState(false);
   const [progressionDropdown, setProgressionDropdown] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [songDetailsModalOpen, setSongDetailsModalOpen] = useState(false);
 
   const [deleteAlbum] = useMutation(DELETE_ALBUM);
   const [createSong] = useMutation(CREATE_SONG);
@@ -139,6 +148,14 @@ const ArtistsAlbums = ({ queryID }) => {
       ) : (
         ""
       )}
+      {songDetailsModalOpen ? (
+        <SongDetailsModal
+          songDetails={songDetails}
+          setSongDetailsModalOpen={setSongDetailsModalOpen}
+        />
+      ) : (
+        ""
+      )}
       <div
         style={{
           backgroundImage: `url(${albumDetails.album_artwork})`,
@@ -170,7 +187,24 @@ const ArtistsAlbums = ({ queryID }) => {
           <div className="card card--align-start card--lg">
             {albumDetails.album_songs.length >= 0 ? (
               albumDetails.album_songs.map((song) => (
-                <div className="card__row">
+                <div
+                  key={song.song_name}
+                  className="card__row"
+                  onClick={() => {
+                    console.log(song);
+                    setSongDetails({
+                      ...songDetails,
+                      name: song.song_name,
+                      tempo: song.tempo,
+                      key: `${song.key[0].key} ${
+                        song.key[0].is_major ? "Major" : "Minor"
+                      }`,
+                      progression: song.progression[0].numerals,
+                      album_artwork: albumDetails.album_artwork,
+                    });
+                    setSongDetailsModalOpen(true);
+                  }}
+                >
                   <div className="card__row-content-wrapper">
                     <img
                       className="card__row-img"

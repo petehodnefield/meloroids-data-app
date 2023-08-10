@@ -156,7 +156,16 @@ export const ALBUM = gql`
         _id
         song_name
         tempo
-        popularity
+        progression {
+          _id
+          numerals
+          is_major
+        }
+        key {
+          is_major
+          _id
+          key
+        }
       }
     }
   }

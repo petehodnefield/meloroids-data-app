@@ -326,8 +326,15 @@ header {
 .card--lg {
   width: 20rem;
 }
+.card--sm {
+  width: 12rem;
+  padding: 2rem 1.5rem;
+}
 .card--align-start {
   align-items: flex-start;
+}
+.card--align-center {
+  align-items: center;
 }
 .card__row {
   height: 3rem;
