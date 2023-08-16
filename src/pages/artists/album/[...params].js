@@ -5,12 +5,14 @@ import {
   DELETE_ALBUM,
   CREATE_SONG,
   DELETE_SONG,
+  CREATE_PROGRESSION,
 } from "../../../../utils/mutations";
 import { useQuery, useMutation } from "@apollo/client";
 import style from "@/styles/IndividualAlbum.module.css";
 import Link from "next/link";
 import EditSongModal from "@/components/Modals/EditSongModal";
 import SongDetailsModal from "@/components/Modals/SongDetailsModal";
+import NewProgressionModal from "@/components/Modals/NewProgressionModal";
 const ArtistsAlbums = ({ queryID }) => {
   const [albumDetails, setAlbumDetails] = useState({
     album_id: "",
@@ -46,6 +48,7 @@ const ArtistsAlbums = ({ queryID }) => {
   const [progressionDropdown, setProgressionDropdown] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [songDetailsModalOpen, setSongDetailsModalOpen] = useState(false);
+  const [newProgresionModalOpen, setNewProgressionModalOpen] = useState(false);
 
   const [deleteAlbum] = useMutation(DELETE_ALBUM);
   const [createSong] = useMutation(CREATE_SONG);
@@ -138,6 +141,7 @@ const ArtistsAlbums = ({ queryID }) => {
       }
     }
   };
+
   return (
     <div className={style.container}>
       {modalOpen ? (
@@ -152,6 +156,13 @@ const ArtistsAlbums = ({ queryID }) => {
         <SongDetailsModal
           songDetails={songDetails}
           setSongDetailsModalOpen={setSongDetailsModalOpen}
+        />
+      ) : (
+        ""
+      )}
+      {newProgresionModalOpen ? (
+        <NewProgressionModal
+          setNewProgressionModalOpen={setNewProgressionModalOpen}
         />
       ) : (
         ""
@@ -326,6 +337,7 @@ const ArtistsAlbums = ({ queryID }) => {
                 )}
               </div>
             </div>
+
             <div className="form__input-label-wrapper">
               <label className="form__label">Progression</label>
               <div>
@@ -368,7 +380,17 @@ const ArtistsAlbums = ({ queryID }) => {
               ) : (
                 ""
               )}
+              <div
+                className="dropdown"
+                onClick={() => {
+                  setNewProgressionModalOpen(true);
+                  setProgressionDropdown(!progressionDropdown);
+                }}
+              >
+                Add New Progression
+              </div>
             </div>
+
             <button className="btn btn-primary rounded" type="submit">
               Add song
             </button>

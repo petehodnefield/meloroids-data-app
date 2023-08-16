@@ -123,3 +123,27 @@ export const UPDATE_SONG = gql`
     }
   }
 `;
+
+export const CREATE_PROGRESSION = gql`
+  mutation Mutation(
+    $numerals: String!
+    $isMajor: Boolean
+    $allKeys: AllHelloKeys
+  ) {
+    createProgression(
+      numerals: $numerals
+      is_major: $isMajor
+      all_keys: $allKeys
+    ) {
+      _id
+      is_major
+      numerals
+      all_keys {
+        _id
+        key
+        progression_in_key
+        midi_file
+      }
+    }
+  }
+`;
