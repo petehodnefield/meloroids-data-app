@@ -13,6 +13,7 @@ const AddProgressions = ({ queryID }) => {
   const { data: genreData } = useQuery(GENRE, {
     variables: { genreId: queryID.id },
   });
+  const [updateGenre] = useMutation(UPDATE_GENRE);
   useEffect(() => {
     if (!genreData || genreData.genre === null) {
       return;
@@ -29,6 +30,23 @@ const AddProgressions = ({ queryID }) => {
       setProgressions(progressions);
     }
   }, [progressionsData]);
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const addEveryProgressions = await addProgressionToGenre.forEach(
+        (progression) =>
+          updateGenre({
+            variables: {
+              id: queryID.id,
+              progressionId: progression._id,
+            },
+          })
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <div className="container">
       <div className="container--row">
@@ -52,6 +70,11 @@ const AddProgressions = ({ queryID }) => {
                 ))
               : ""}
           </div>
+          <form onSubmit={(e) => handleFormSubmit(e)}>
+            <button type="submit" className="btn btn-primary rounded">
+              Submit
+            </button>
+          </form>
         </div>
         {addProgressionToGenre ? (
           <div>
