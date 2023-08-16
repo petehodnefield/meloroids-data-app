@@ -147,3 +147,26 @@ export const CREATE_PROGRESSION = gql`
     }
   }
 `;
+export const CREATE_GENRE = gql`
+  mutation Mutation($genre: String!) {
+    createGenre(genre: $genre) {
+      _id
+      genre
+    }
+  }
+`;
+
+export const UPDATE_GENRE = gql`
+  mutation Mutation($id: ID!, $progressionId: ID!) {
+    updateGenre(_id: $id, progression_id: $progressionId) {
+      _id
+      genre
+      progressions {
+        _id
+        numerals
+
+        is_major
+      }
+    }
+  }
+`;

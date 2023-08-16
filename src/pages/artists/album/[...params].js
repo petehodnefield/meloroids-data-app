@@ -100,8 +100,9 @@ const ArtistsAlbums = ({ queryID }) => {
   };
   const filterProgressions = (e) => {
     const results = progressionData.progressions.filter((progression) =>
-      progression.numerals.toLowerCase().includes(e.toLowerCase())
+      progression.numerals.toLowerCase().match(e.toLowerCase())
     );
+    console.log("results", results);
     setSpecificProgressions(results);
   };
 
@@ -362,7 +363,7 @@ const ArtistsAlbums = ({ queryID }) => {
                   {specificProgressions.map((specific) => (
                     <div
                       className="dropdown"
-                      key={`${specific.numerals} `}
+                      key={`${specific._id} `}
                       onClick={() => {
                         setNewSongParams({
                           ...newSongParams,

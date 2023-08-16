@@ -179,3 +179,18 @@ export const ALL_KEYS = gql`
     }
   }
 `;
+
+export const GENRE = gql`
+  query Genre($genreId: ID!) {
+    genre(id: $genreId) {
+      _id
+      genre
+      progressions {
+        _id
+        numerals
+
+        is_major
+      }
+    }
+  }
+`;
