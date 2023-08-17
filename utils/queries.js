@@ -194,3 +194,13 @@ export const GENRE = gql`
     }
   }
 `;
+
+export const GENRE_FILTERED_PROGRESSIONS = gql`
+  query Genrefilteredprogressions($progressionId: [ID!]) {
+    genrefilteredprogressions(progressionId: $progressionId) {
+      _id
+      numerals
+      is_major
+    }
+  }
+`;
