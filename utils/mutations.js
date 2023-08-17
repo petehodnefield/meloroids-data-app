@@ -170,3 +170,11 @@ export const UPDATE_GENRE = gql`
     }
   }
 `;
+export const DELETE_GENRE = gql`
+  mutation DeleteGenre($id: ID!) {
+    deleteGenre(_id: $id) {
+      _id
+      genre
+    }
+  }
+`;

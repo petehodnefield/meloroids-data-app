@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { ALL_GENRES } from "../../../utils/queries";
-import { CREATE_GENRE } from "../../../utils/mutations";
+import { CREATE_GENRE, DELETE_GENRE } from "../../../utils/mutations";
 import Link from "next/link";
 const Genres = () => {
   const [newGenre, setNewGenre] = useState("");
@@ -10,6 +10,7 @@ const Genres = () => {
 
   const { data } = useQuery(ALL_GENRES);
   const [createGenre] = useMutation(CREATE_GENRE);
+  const [deleteGenre] = useMutation(DELETE_GENRE);
   useEffect(() => {
     if (!data || data.genres === null) {
       return;
@@ -32,6 +33,23 @@ const Genres = () => {
       console.log(e);
     }
   };
+
+  const handleGenreDelete = async (genreName, genreId) => {
+    const confirmDeletion = window.confirm(
+      `Are you sure you want to delete ${genreName}?`
+    );
+    if (confirmDeletion) {
+      try {
+        await deleteGenre({
+          variables: { id: genreId },
+        });
+        window.location.reload();
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    return;
+  };
   return (
     <div className="container">
       <h1>Genres</h1>
@@ -49,7 +67,14 @@ const Genres = () => {
                     {genre.genre}{" "}
                     <div className="card__row-action-wrapper">
                       <p className="card__row-action">Edit</p>
-                      <p className="card__row-action">Delete</p>
+                      <p
+                        className="card__row-action"
+                        onClick={() =>
+                          handleGenreDelete(genre.genre, genre._id)
+                        }
+                      >
+                        Delete
+                      </p>
                     </div>
                   </Link>
                 ))

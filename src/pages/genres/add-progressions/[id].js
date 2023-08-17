@@ -5,10 +5,13 @@ import { GENRE, ALL_PROGRESSIONS } from "../../../../utils/queries";
 import { initializeApollo } from "../../../../lib/apollo";
 
 const AddProgressions = ({ queryID }) => {
-  const [genre, setGenre] = useState();
+  const [genre, setGenre] = useState({
+    genreName: "",
+    progressions: [],
+  });
+
   const [progressions, setProgressions] = useState();
   const [addProgressionToGenre, setAddProgressionToGenre] = useState([]);
-  console.log("addProgression", addProgressionToGenre);
   const { data: progressionsData } = useQuery(ALL_PROGRESSIONS);
   const { data: genreData } = useQuery(GENRE, {
     variables: { genreId: queryID.id },
@@ -19,7 +22,11 @@ const AddProgressions = ({ queryID }) => {
       return;
     } else {
       const genre = genreData.genre;
-      setGenre(genre.genre);
+      setGenre({
+        ...genre,
+        genreName: genre.genre,
+        progressions: genre.progressions,
+      });
     }
   }, [genreData]);
   useEffect(() => {
@@ -27,6 +34,12 @@ const AddProgressions = ({ queryID }) => {
       return;
     } else {
       const progressions = progressionsData.progressions;
+      // Only set progressions that don't already exist yet in selected genre
+      console.log(genre.progressions);
+      const filterProgressions = progressions.filter(
+        (progressions) => progressions.numerals !== genre.progressions.numerals
+      );
+      console.log("filterProgressions", filterProgressions);
       setProgressions(progressions);
     }
   }, [progressionsData]);
@@ -51,7 +64,7 @@ const AddProgressions = ({ queryID }) => {
     <div className="container">
       <div className="container--row">
         <div>
-          <h1>Add progressions to {genre}</h1>
+          <h1>Add progressions to {genre.genreName}</h1>
           <div className="card card--lg card--overflow">
             {progressions
               ? progressions.map((progression) => (
