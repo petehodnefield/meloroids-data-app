@@ -125,6 +125,11 @@ header {
   font-size: 1.5rem;
   font-weight: 500;
 }
+.title--lg {
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: 500;
+}
 /* Button styling */
 .btn {
   font-size: 1rem;
@@ -275,6 +280,10 @@ header {
   min-height: 100vh;
 }
 .container--row {
+  display: flex;
+}
+.flex--column {
+  flex-direction: column;
   display: flex;
 }
 /* All artists page */

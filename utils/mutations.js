@@ -170,6 +170,19 @@ export const UPDATE_GENRE = gql`
     }
   }
 `;
+export const REMOVE_PROGRESSION_FROM_GENRE = gql`
+  mutation RemoveProgressionFromGenre($id: ID!, $progressionId: ID!) {
+    removeProgressionFromGenre(_id: $id, progression_id: $progressionId) {
+      _id
+      genre
+      progressions {
+        _id
+        numerals
+        is_major
+      }
+    }
+  }
+`;
 export const DELETE_GENRE = gql`
   mutation DeleteGenre($id: ID!) {
     deleteGenre(_id: $id) {
