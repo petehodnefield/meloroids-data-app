@@ -84,6 +84,15 @@ export const ALL_PROGRESSIONS = gql`
     }
   }
 `;
+export const PROGRESSION = gql`
+  query Progression($progressionId: ID!) {
+    progression(id: $progressionId) {
+      _id
+      numerals
+      is_major
+    }
+  }
+`;
 export const ARTIST_ALL_SONGS = gql`
   query Artistallsongs($name: String!) {
     artistallsongs(name: $name) {
@@ -200,6 +209,16 @@ export const GENRE_FILTERED_PROGRESSIONS = gql`
     genrefilteredprogressions(progressionId: $progressionId) {
       _id
       numerals
+      is_major
+    }
+  }
+`;
+
+export const KEY = gql`
+  query Key($keyId: ID!) {
+    key(id: $keyId) {
+      _id
+      key
       is_major
     }
   }

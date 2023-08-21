@@ -241,6 +241,9 @@ header {
   margin-bottom: 0.25rem;
 }
 .form__input {
+  display: flex;
+  align-items: center;
+
   height: 3rem;
   width: 20rem;
   border-radius: 0.5rem;
@@ -364,6 +367,10 @@ header {
   font-size: 1rem;
   font-weight: 400;
   padding: 0.5rem 1rem;
+}
+.card--overflow {
+  max-height: 20rem;
+  overflow: auto;
 }
 .card__row:hover {
   cursor: pointer;

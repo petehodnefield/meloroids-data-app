@@ -107,19 +107,28 @@ export const ALL_KEYS = gql`
   }
 `;
 export const UPDATE_SONG = gql`
-  mutation Mutation($id: ID!, $songName: String, $tempo: Int) {
-    updateSong(_id: $id, song_name: $songName, tempo: $tempo) {
+  mutation Mutation(
+    $songName: String!
+    $tempo: Int
+    $oldProgressionId: ID
+    $newProgressionId: ID
+    $oldKeyId: ID
+    $newKeyId: ID
+    $songId: ID!
+  ) {
+    updateSong(
+      song_name: $songName
+      tempo: $tempo
+      old_progression_id: $oldProgressionId
+      new_progression_id: $newProgressionId
+      old_key_id: $oldKeyId
+      new_key_id: $newKeyId
+      song_id: $songId
+    ) {
       _id
       song_name
       tempo
       popularity
-      key {
-        _id
-      }
-      progression {
-        _id
-        numerals
-      }
     }
   }
 `;

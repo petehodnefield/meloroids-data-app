@@ -24,7 +24,12 @@ const ArtistsAlbums = ({ queryID }) => {
   const [editSongDetails, setEditSongDetails] = useState({
     name: "",
     tempo: "",
+    keyId: "",
+    keyLiteral: "",
+    progressionId: "",
+    progressionNumerals: "",
   });
+
   const [songDetails, setSongDetails] = useState({
     name: "",
     tempo: "",
@@ -73,7 +78,6 @@ const ArtistsAlbums = ({ queryID }) => {
       });
     }
   }, [data]);
-
   const handleAlbumDelete = async () => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this?"
@@ -102,7 +106,6 @@ const ArtistsAlbums = ({ queryID }) => {
     const results = progressionData.progressions.filter((progression) =>
       progression.numerals.toLowerCase().match(e.toLowerCase())
     );
-    console.log("results", results);
     setSpecificProgressions(results);
   };
 
@@ -203,7 +206,6 @@ const ArtistsAlbums = ({ queryID }) => {
                   key={song.song_name}
                   className="card__row"
                   onClick={() => {
-                    console.log(song);
                     setSongDetails({
                       ...songDetails,
                       name: song.song_name,
@@ -235,6 +237,9 @@ const ArtistsAlbums = ({ queryID }) => {
                           name: song.song_name,
                           tempo: song.tempo,
                           id: song._id,
+                          progressionId: song.progression[0]._id,
+                          progressionNumerals: song.progression[0].numerals,
+                          keyId: song.key[0]._id,
                         });
                         setModalOpen(true);
                       }}
