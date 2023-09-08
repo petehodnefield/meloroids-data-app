@@ -21,7 +21,6 @@ const AddProgressions = ({ queryID }) => {
   const [progressions, setProgressions] = useState();
   const [addProgressionToGenre, setAddProgressionToGenre] = useState([]);
   const [filteredProgressions, setFilteredProgressions] = useState();
-  // console.log("filteredProgressions", filteredProgressions);
   const { data: progressionsData } = useQuery(ALL_PROGRESSIONS);
   const { data: genreData } = useQuery(GENRE, {
     variables: { genreId: queryID.id },
@@ -67,7 +66,6 @@ const AddProgressions = ({ queryID }) => {
     if (!filteredProgressionsData) {
       return;
     } else {
-      console.log("data", filteredProgressionsData);
       setFilteredProgressions(
         filteredProgressionsData.genrefilteredprogressions
       );

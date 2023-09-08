@@ -1,7 +1,16 @@
 import React from "react";
 import Link from "next/link";
 import Head from "next/head";
+import { useContext } from "react";
+import { LoginContext } from "@/pages/_app";
+import Auth from "../../utils/auth";
 const Layout = ({ children }) => {
+  const [loggedIn, setLoggedIn] = useContext(LoginContext);
+  const logout = async (e) => {
+    e.preventDefault();
+    Auth.logout();
+    await client.resetStore();
+  };
   return (
     <div>
       <Head>
@@ -11,7 +20,12 @@ const Layout = ({ children }) => {
       <header>
         <Link href="/">
           <h1>Meloroids Data Application</h1>
-        </Link>
+        </Link>{" "}
+        {loggedIn ? (
+          <button onClick={logout}>Logout</button>
+        ) : (
+          <Link href={"/login"}>Login</Link>
+        )}
       </header>
       <main>{children}</main>
     </div>

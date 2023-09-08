@@ -8,7 +8,6 @@ const Progressions = () => {
     numerals: "",
     isMajor: false,
   });
-  console.log("newProgression", newProgression);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();

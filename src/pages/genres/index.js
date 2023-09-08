@@ -6,7 +6,6 @@ import Link from "next/link";
 const Genres = () => {
   const [newGenre, setNewGenre] = useState("");
   const [allGenres, setAllGenres] = useState();
-  console.log(allGenres);
 
   const { data } = useQuery(ALL_GENRES);
   const [createGenre] = useMutation(CREATE_GENRE);
@@ -26,7 +25,6 @@ const Genres = () => {
       const createdGenre = await createGenre({
         variables: { genre: newGenre },
       });
-      console.log(createdGenre);
       const newGenreId = createdGenre.data.createGenre._id;
       window.location.replace(`/genres/add-progressions/${newGenreId}`);
     } catch (e) {

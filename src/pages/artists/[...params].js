@@ -20,7 +20,6 @@ const Artist = ({ queryName }) => {
     artwork: "",
     year: "",
   });
-  console.log(artistDetails);
   const selectedArtist = queryName.params[0];
   const { loading, data, error } = useQuery(ARTIST_BY_NAME, {
     variables: { name: selectedArtist },

@@ -5,7 +5,6 @@ import { initializeApollo } from "../../../lib/apollo";
 const ArtistSongs = ({ queryName }) => {
   const selectedArtist = queryName.params[0];
   const [allSongs, setAllSongs] = useState([]);
-  console.log(allSongs);
   const { loading, data, error } = useQuery(ARTIST_ALL_SONGS, {
     variables: { name: selectedArtist },
   });

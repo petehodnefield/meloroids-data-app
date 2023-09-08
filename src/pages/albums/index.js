@@ -5,7 +5,6 @@ import { ALL_ALBUMS } from "../../../utils/queries";
 const Albums = () => {
   const { loading, data, error } = useQuery(ALL_ALBUMS);
   if (loading) return <div>Loading...</div>;
-  console.log(data);
   return (
     <div>
       <h2 className="header">Albums</h2>

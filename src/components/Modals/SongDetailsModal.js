@@ -1,7 +1,6 @@
 import React from "react";
 
 const SongDetailsModal = ({ songDetails, setSongDetailsModalOpen }) => {
-  console.log(songDetails);
   return (
     <div
       className="modal modal--song-details"

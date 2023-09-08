@@ -6,7 +6,6 @@ const Artists = () => {
   const { loading, data, error } = useQuery(ALL_ARTISTS);
   if (loading) return <div> Loading...</div>;
 
-  console.log(data);
   return (
     <div className="container">
       <h2 className="artist__pgHeader">ARTISTS</h2>
